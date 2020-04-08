@@ -7,7 +7,8 @@ let ingredients = {
   mushrooms: { name: 'Mushrooms', price: 1 },
   greenPeppers: { name: 'Green Peppers', price: 1 },
   whiteSauce: { name: 'White sauce', price: 3 },
-  glutenFreeCrust: { name: 'Gluten-free crust', price: 5 }
+  glutenFreeCrust: { name: 'Gluten-free crust', price: 5 },
+  total: {name: 'Total', price:21,}
 };
 
 // Initial value of the state (the state values can change over time)
@@ -15,8 +16,8 @@ let state = {
   pepperoni: true,
   mushrooms: true,
   greenPeppers: true,
-  whiteSauce: false,
-  glutenFreeCrust: false
+  whiteSauce: true,
+  glutenFreeCrust: true
 };
 
 // This function takes care of rendering the pizza based on the state
@@ -29,7 +30,7 @@ function renderEverything(index) {
   renderGlutenFreeCrust();
 
   renderButtons(index);
-  renderPrice();
+  renderPrice(index);
 }
 
 function renderPepperoni() {
@@ -90,11 +91,23 @@ function renderButtons(i) {
   }
 }
 
+
 function renderPrice(i) {
-  // Iteration 4: change the HTML of `<aside class="panel price">`
-  
+let p =document.querySelector("body > aside > strong") ;
+  if (i!==undefined){
 
-
+    if(document.getElementsByClassName('btn')[i].className.includes('active'))
+    {
+      ingredients.total.price += Object.values(ingredients)[i].price
+      document.querySelectorAll('.price ul li')[i].style.display = 'block'
+    }
+    else
+    {
+      ingredients.total.price -= Object.values(ingredients)[i].price
+      document.querySelectorAll('.price ul li')[i].style.display = 'none'
+    }
+  }
+  p.innerText = `$${ingredients.total.price}`
 }
 
 renderEverything();
@@ -131,7 +144,3 @@ document.querySelector('.btn.btn-crust').addEventListener('click', () => {
 // Iteration 2: Add click event listener on `<button class="btn btn-sauce">`
 
 // Iteration 2: Add click event listener on `<button class="btn btn-crust">`
-var x;
-console.log(x =  document.querySelector('button').forEach(btn => {
-  console.log(btn)
-}))
